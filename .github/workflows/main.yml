@@ -12,10 +12,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      - name: Install Buildozer
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev cython3 libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+          sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev cython3 libsdl2-dev
           pip install --upgrade buildozer "Cython<3.0"
 
       - name: Generate Spec File
@@ -25,14 +25,12 @@ jobs:
           [app]
           title = Mafia Game
           package.name = mafiagame
-          package.domain = org.test
+          package.domain = org.mafia
           source.dir = .
           source.include_exts = py,png,jpg,kv,atlas
           version = 0.1
-          requirements = python3,pygame,arabic-reshaper,python-bidi
+          requirements = python3,kivy
           orientation = portrait
-          osx.python_version = 3
-          osx.kivy_version = 1.9.1
           fullscreen = 0
           android.archs = arm64-v8a
           android.allow_backup = True
@@ -42,7 +40,7 @@ jobs:
           warn_on_root = 1
           EOF
 
-      - name: Build APK with Buildozer
+      - name: Build APK
         run: |
           yes | buildozer -v android debug
 
